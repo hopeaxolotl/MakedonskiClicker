@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="mk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Македонски Аргјумент Симуљатор</title>
+    <style>
+        body {
+            font-family: 'Comic Sans MS', Tahoma, 'Comic Sans MS', Verdana, sans-serif;
+            background-image: url("Флаг северной македонии.png");
+            color: #373e26;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            max-width: 1000px;
+            padding: 20px;
+        }
+        
+        .game-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            color: #3a2602;
+            margin-bottom: 10px;
+        }
+        
+        .game-area {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .clicker-section {
+            flex: 1;
+            min-width: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #16213e;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .stats {
+            width: 100%;
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .stat {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .gem-count, .gems-per-second, .gems-per-click {
+            font-weight: bold;
+            font-size: 24px;
+            color: #4d8af7;
+        }
+        
+        .mine-btn {
+            background: linear-gradient(135deg, #4d8af7, #2a5298);
+            border: none;
+            border-radius: 50%;
+            width: 200px;
+            height: 200px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(77, 138, 247, 0.5);
+            transition: transform 0.1s, box-shadow 0.1s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .mine-btn:hover {
+            box-shadow: 0 6px 20px rgba(77, 138, 247, 0.7);
+        }
+        
+        .mine-btn:active {
+            transform: scale(0.95);
+            box-shadow: 0 2px 10px rgba(77, 138, 247, 0.6);
+        }
+        
+        .mine-btn img {
+            width: 120px;
+            height: 120px;
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8));
+        }
+        
+        .upgrades-section {
+            flex: 1;
+            min-width: 300px;
+            background-image: url("Презідент Болгария Бойко Борисов СЛАВА.jpg");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-size: 100% 100%;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .upgrades-title {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #4d8af7;
+        }
+        
+        .upgrade-item {
+            background-color: #0f3460;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .upgrade-item:hover {
+            background-color: #1a4b88;
+        }
+        
+        .upgrade-item.disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .upgrade-info {
+            flex: 1;
+        }
+        
+        .upgrade-name {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .upgrade-description {
+            font-size: 14px;
+            color: #cccccc;
+        }
+        
+        .upgrade-cost {
+            color: #4d8af7;
+            font-weight: bold;
+            margin-left: 10px;
+            white-space: nowrap;
+        }
+        
+        .upgrade-level {
+            background-color: #4d8af7;
+            color: white;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        
+        .gem-float {
+            position: absolute;
+            font-weight: bold;
+            color: #4d8af7;
+            text-shadow: 0 0 5px rgba(77, 138, 247, 0.8);
+            opacity: 0;
+            pointer-events: none;
+            animation: float-up 2s ease-out;
+        }
+        
+        @keyframes float-up {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) scale(0.5);
+                opacity: 0;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .game-area {
+                flex-direction: column;
+            }
+        }
+        
+        .achievements-section {
+            margin-top: 20px;
+            background-color: #16213e;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .achievements-title {
+            text-align: center;
+            margin-bottom: 15px;
+            color: #4d8af7;
+        }
+        
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .achievement {
+            background-color: #0f3460;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            opacity: 0.4;
+            transition: opacity 0.3s;
+        }
+        
+        .achievement.unlocked {
+            opacity: 1;
+        }
+        
+        .achievement-icon {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        .achievement-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .achievement-description {
+            font-size: 12px;
+            color: #cccccc;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #4d8af7;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transform: translateX(150%);
+            transition: transform 0.3s ease-out;
+            z-index: 100;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="game-header">
+            <h1>Македонски Аргјумент Симуљатор</h1>
+            <p>КЛИКНЕТЕ за пари од нашиот БОЈКО БОРИСОВ!!</p>
+        </div>
+        
+        <div class="game-area">
+            <div class="clicker-section">
+                <div class="stats">
+                    <div class="stat">
+                        <div class="gem-count" id="gem-count">0</div>
+                        <div>пари</div>
+                    </div>
+                    <div class="stat">
+                        <div class="gems-per-click" id="gems-per-click">1</div>
+                        <div>за клик</div>
+                    </div>
+                    <div class="stat">
+                        <div class="gems-per-second" id="gems-per-second">0</div>
+                        <div>во секунди</div>
+                    </div>
+                </div>
+                
+                <button class="mine-btn" id="mine-btn">
+                    <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M60 10L90 30V70L60 90L30 70V30L60 10Z" fill="#8864fb" stroke="#ffffff" stroke-width="2"/>
+                        <path d="M60 10V50L90 30L60 10Z" fill="#a48cfc" stroke="#ffffff" stroke-width="1"/>
+                        <path d="M60 10V50L30 30L60 10Z" fill="#6e40fa" stroke="#ffffff" stroke-width="1"/>
+                        <path d="M60 90V50L90 70L60 90Z" fill="#6e40fa" stroke="#ffffff" stroke-width="1"/>
+                        <path d="M60 90V50L30 70L60 90Z" fill="#a48cfc" stroke="#ffffff" stroke-width="1"/>
+                    </svg>
+                </button>
+            </div>
+            
+            <div class="upgrades-section">
+                <h2 class="upgrades-title">Upgrades</h2>
+                <div id="upgrades-list">
+                    <!-- Upgrades will be added here via JavaScript -->
+                </div>
+            </div>
+        </div>
+        
+        <div class="achievements-section">
+            <h2 class="achievements-title">Achievements</h2>
+            <div class="achievements-grid" id="achievements-grid">
+                <!-- Achievements will be added here via JavaScript -->
+            </div>
+        </div>
+    </div>
+    
+    <div class="notification" id="notification"></div>
+    
+    <script>
+        // Game state
+        const game = {
+            gems: 0,
+            gemsPerClick: 1,
+            gemsPerSecond: 0,
+            totalGemsMined: 0,
+            clickCount: 0,
+            lastSave: Date.now(),
+            
+            // Upgrades data structure
+            upgrades: [
+                {
+                    id: 'pickaxe',
+                    name: 'Better Pickaxe',
+                    description: 'Increases gems per click',
+                    baseCost: 15,
+                    level: 0,
+                    maxLevel: 50,
+                    effect: level => level * 1
+                },
+                {
+                    id: 'drill',
+                    name: 'Mining Drill',
+                    description: 'Mines gems automatically',
+                    baseCost: 100,
+                    level: 0,
+                    maxLevel: 50,
+                    effect: level => level * 1
+                },
+                {
+                    id: 'robot',
+                    name: 'Mining Robot',
+                    description: 'More efficient automatic mining',
+                    baseCost: 1100,
+                    level: 0,
+                    maxLevel: 25,
+                    effect: level => level * 8
+                },
+                {
+                    id: 'laser',
+                    name: 'Gem Laser',
+                    description: 'Significantly increases gems per click',
+                    baseCost: 12000,
+                    level: 0,
+                    maxLevel: 10,
+                    effect: level => level * 50
+                },
+                {
+                    id: 'factory',
+                    name: 'Gem Factory',
+                    description: 'Mass produces gems automatically',
+                    baseCost: 130000,
+                    level: 0,
+                    maxLevel: 5,
+                    effect: level => level * 470
+                }
+            ],
+            
+            // Achievements data structure
+            achievements: [
+                {
+                    id: 'first_gem',
+                    name: 'First Gem',
+                    description: 'Mine your first gem',
+                    icon: '💎',
+                    unlocked: false,
+                    check: () => game.totalGemsMined >= 1
+                },
+                {
+                    id: 'gem_collector',
+                    name: 'Gem Collector',
+                    description: 'Mine 1,000 gems in total',
+                    icon: '🏆',
+                    unlocked: false,
+                    check: () => game.totalGemsMined >= 1000
+                },
+                {
+                    id: 'gem_hoarder',
+                    name: 'Gem Hoarder',
+                    description: 'Have 10,000 gems at once',
+                    icon: '💰',
+                    unlocked: false,
+                    check: () => game.gems >= 10000
+                },
+                {
+                    id: 'clicker',
+                    name: 'Dedicated Clicker',
+                    description: 'Click 500 times',
+                    icon: '👆',
+                    unlocked: false,
+                    check: () => game.clickCount >= 500
+                },
+                {
+                    id: 'upgrader',
+                    name: 'Upgrader',
+                    description: 'Purchase 25 upgrades in total',
+                    icon: '⬆️',
+                    unlocked: false,
+                    check: () => {
+                        const totalUpgrades = game.upgrades.reduce((sum, upgrade) => sum + upgrade.level, 0);
+                        return totalUpgrades >= 25;
+                    }
+                },
+                {
+                    id: 'automated',
+                    name: 'Automation Master',
+                    description: 'Reach 100 gems per second',
+                    icon: '🤖',
+                    unlocked: false,
+                    check: () => game.gemsPerSecond >= 100
+                }
+            ]
+        };
+        
+        // DOM Elements
+        const gemCountElement = document.getElementById('gem-count');
+        const gemsPerClickElement = document.getElementById('gems-per-click');
+        const gemsPerSecondElement = document.getElementById('gems-per-second');
+        const mineButton = document.getElementById('mine-btn');
+        const upgradesList = document.getElementById('upgrades-list');
+        const achievementsGrid = document.getElementById('achievements-grid');
+        const notification = document.getElementById('notification');
+        
+        // Format numbers for display
+        function formatNumber(num) {
+            if (num >= 1000000) {
+                return (num / 1000000).toFixed(2) + 'M';
+            } else if (num >= 1000) {
+                return (num / 1000).toFixed(2) + 'K';
+            } else {
+                return Math.floor(num);
+            }
+        }
+        
+        // Calculate upgrade cost based on its base cost and current level
+        function calculateUpgradeCost(upgrade) {
+            return Math.floor(upgrade.baseCost * Math.pow(1.15, upgrade.level));
+        }
+        
+        // Update display of game stats
+        function updateDisplay() {
+            gemCountElement.textContent = formatNumber(game.gems);
+            gemsPerClickElement.textContent = formatNumber(game.gemsPerClick);
+            gemsPerSecondElement.textContent = formatNumber(game.gemsPerSecond);
+        }
+        
+        // Create and display upgrade items
+        function renderUpgrades() {
+            upgradesList.innerHTML = '';
+            
+            game.upgrades.forEach(upgrade => {
+                const cost = calculateUpgradeCost(upgrade);
+                const canAfford = game.gems >= cost;
+                const isMaxed = upgrade.level >= upgrade.maxLevel;
+                
+                const upgradeElement = document.createElement('div');
+                upgradeElement.className = `upgrade-item ${(!canAfford || isMaxed) ? 'disabled' : ''}`;
+                
+                let description = upgrade.description;
+                if (isMaxed) {
+                    description = 'MAXED OUT!';
+                }
+                
+                upgradeElement.innerHTML = `
+                    <div class="upgrade-info">
+                        <div class="upgrade-name">${upgrade.name}</div>
+                        <div class="upgrade-description">${description}</div>
+                    </div>
+                    <div class="upgrade-cost">${isMaxed ? 'MAX' : formatNumber(cost) + ' 💎'}</div>
+                    <div class="upgrade-level">${upgrade.level}</div>
+                `;
+                
+                if (!isMaxed) {
+                    upgradeElement.addEventListener('click', () => {
+                        if (game.gems >= cost) {
+                            game.gems -= cost;
+                            upgrade.level++;
+                            
+                            // Update stats based on upgrade type
+                            if (upgrade.id === 'pickaxe' || upgrade.id === 'laser') {
+                                game.gemsPerClick = 1 + game.upgrades[0].effect(game.upgrades[0].level) + game.upgrades[3].effect(game.upgrades[3].level);
+                            } else {
+                                game.gemsPerSecond = game.upgrades[1].effect(game.upgrades[1].level) + game.upgrades[2].effect(game.upgrades[2].level) + game.upgrades[4].effect(game.upgrades[4].level);
+                            }
+                            
+                            updateDisplay();
+                            renderUpgrades();
+                            checkAchievements();
+                            saveGame();
+                        }
+                    });
+                }
+                
+                upgradesList.appendChild(upgradeElement);
+            });
+        }
+        
+        // Render achievements
+        function renderAchievements() {
+            achievementsGrid.innerHTML = '';
+            
+            game.achievements.forEach(achievement => {
+                const achievementElement = document.createElement('div');
+                achievementElement.className = `achievement ${achievement.unlocked ? 'unlocked' : ''}`;
+                
+                achievementElement.innerHTML = `
+                    <div class="achievement-icon">${achievement.icon}</div>
+                    <div class="achievement-name">${achievement.name}</div>
+                    <div class="achievement-description">${achievement.description}</div>
+                `;
+                
+                achievementsGrid.appendChild(achievementElement);
+            });
+        }
+        
+        // Check for unlocked achievements
+        function checkAchievements() {
+            game.achievements.forEach(achievement => {
+                if (!achievement.unlocked && achievement.check()) {
+                    achievement.unlocked = true;
+                    showNotification(`Achievement Unlocked: ${achievement.name}`);
+                    renderAchievements();
+                }
+            });
+        }
+        
+        // Show notification
+        function showNotification(message) {
+            notification.textContent = message;
+            notification.classList.add('show');
+            
+            setTimeout(() => {
+                notification.classList.remove('show');
+            }, 3000);
+        }
+        
+        // Mine gems on click
+        mineButton.addEventListener('click', () => {
+            const gemsGained = game.gemsPerClick;
+            game.gems += gemsGained;
+            game.totalGemsMined += gemsGained;
+            game.clickCount++;
+            
+            // Create floating gem number effect
+            const gemFloat = document.createElement('div');
+            gemFloat.className = 'gem-float';
+            gemFloat.textContent = `+${formatNumber(gemsGained)}`;
+            
+            // Position the floating text near the click position
+            const rect = mineButton.getBoundingClientRect();
+            const x = rect.left + rect.width / 2 + (Math.random() * 80 - 40);
+            const y = rect.top + rect.height / 2 + (Math.random() * 80 - 40);
+            
+            gemFloat.style.left = `${x}px`;
+            gemFloat.style.top = `${y}px`;
+            
+            document.body.appendChild(gemFloat);
+            
+            // Remove the element after animation completes
+            setTimeout(() => {
+                document.body.removeChild(gemFloat);
+            }, 2000);
+            
+            updateDisplay();
+            checkAchievements();
+        });
+        
+        // Automatic gem production
+        function produceGemsAutomatically() {
+            if (game.gemsPerSecond > 0) {
+                const now = Date.now();
+                const deltaTime = (now - game.lastSave) / 1000; // Time difference in seconds
+                const gemsGained = game.gemsPerSecond * deltaTime;
+                
+                game.gems += gemsGained;
+                game.totalGemsMined += gemsGained;
+                game.lastSave = now;
+                
+                updateDisplay();
+                checkAchievements();
+            }
+        }
+        
+        // Save game state to localStorage
+        function saveGame() {
+            const saveData = {
+                gems: game.gems,
+                gemsPerClick: game.gemsPerClick,
+                gemsPerSecond: game.gemsPerSecond,
+                totalGemsMined: game.totalGemsMined,
+                clickCount: game.clickCount,
+                lastSave: Date.now(),
+                upgrades: game.upgrades.map(upgrade => ({ id: upgrade.id, level: upgrade.level })),
+                achievements: game.achievements.map(achievement => ({ id: achievement.id, unlocked: achievement.unlocked }))
+            };
+            
+            localStorage.setItem('gemMinerSave', JSON.stringify(saveData));
+        }
+        
+        // Load game state from localStorage
+        function loadGame() {
+            const saveData = localStorage.getItem('gemMinerSave');
+            
+            if (saveData) {
+                const parsed = JSON.parse(saveData);
+                
+                game.gems = parsed.gems;
+                game.gemsPerClick = parsed.gemsPerClick;
+                game.gemsPerSecond = parsed.gemsPerSecond;
+                game.totalGemsMined = parsed.totalGemsMined;
+                game.clickCount = parsed.clickCount;
+                
+                // Handle upgrades
+                if (parsed.upgrades) {
+                    parsed.upgrades.forEach(savedUpgrade => {
+                        const upgrade = game.upgrades.find(u => u.id === savedUpgrade.id);
+                        if (upgrade) {
+                            upgrade.level = savedUpgrade.level;
+                        }
+                    });
+                }
+                
+                // Handle achievements
+                if (parsed.achievements) {
+                    parsed.achievements.forEach(savedAchievement => {
+                        const achievement = game.achievements.find(a => a.id === savedAchievement.id);
+                        if (achievement) {
+                            achievement.unlocked = savedAchievement.unlocked;
+                        }
+                    });
+                }
+                
+                // Calculate stats based on upgrades
+                game.gemsPerClick = 1 + game.upgrades[0].effect(game.upgrades[0].level) + game.upgrades[3].effect(game.upgrades[3].level);
+                game.gemsPerSecond = game.upgrades[1].effect(game.upgrades[1].level) + game.upgrades[2].effect(game.upgrades[2].level) + game.upgrades[4].effect(game.upgrades[4].level);
+                
+                // Calculate offline progress
+                if (parsed.lastSave) {
+                    const now = Date.now();
+                    const offlineTime = (now - parsed.lastSave) / 1000; // seconds
+                    
+                    if (offlineTime > 5 && game.gemsPerSecond > 0) {
+                        const offlineGems = game.gemsPerSecond * Math.min(offlineTime, 86400); // Cap at 24 hours
+                        game.gems += offlineGems;
+                        game.totalGemsMined += offlineGems;
+                        
+                        showNotification(`Welcome back! You earned ${formatNumber(offlineGems)} gems while away.`);
+                    }
+                }
+                
+                game.lastSave = Date.now();
+            }
+        }
+        
+        // Game loop
+        function gameLoop() {
+            produceGemsAutomatically();
+            requestAnimationFrame(gameLoop);
+        }
+        
+        // Initialize game
+        function init() {
+            loadGame();
+            updateDisplay();
+            renderUpgrades();
+            renderAchievements();
+            gameLoop();
+            
+            // Auto-save every 30 seconds
+            setInterval(saveGame, 30000);
+        }
+        
+        // Start the game
+        init();
+    </script>
+</body>
+</html>
