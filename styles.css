@@ -219,19 +219,39 @@ h1 {
 }
 
 .upgrade-item {
+    position: relative;
+    z-index: 10;
+}
+
+.upgrade-info, .upgrade-cost, .upgrade-level {
+    pointer-events: none; /* Let clicks pass through to parent */
+}
+
+.upgrade-item > * {
+    pointer-events: none; /* All children should not intercept clicks */
+}
+
+.upgrade-item {
     background-color: #020101;
     border-radius: 8px;
     padding: 15px;
     margin-bottom: 15px;
     cursor: pointer;
-    transition: background-color 0.2s;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    /* Remove all transitions and animations */
+    border: 2px solid transparent;
 }
 
+/* Simple border highlight only - no animations or transitions */
 .upgrade-item:hover {
-    background-color: #585858;
+    border: 2px solid #2bff00;
+}
+
+/* Processing state - when being clicked */
+.upgrade-item.processing {
+    background-color: #111;
 }
 
 .upgrade-item.disabled {
@@ -239,6 +259,14 @@ h1 {
     cursor: not-allowed;
 }
 
+.upgrade-item.disabled:hover {
+    border: 2px solid transparent;
+}
+
+/* Make sure these maintain their appearance */
+.upgrade-info, .upgrade-cost, .upgrade-level {
+    pointer-events: auto;
+}
 .upgrade-info {
     flex: 1;
 }

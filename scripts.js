@@ -244,6 +244,7 @@ function renderUpgrades() {
         
         const upgradeElement = document.createElement('div');
         upgradeElement.className = `upgrade-item ${(!canAfford || isMaxed) ? 'disabled' : ''}`;
+        upgradeElement.dataset.upgradeId = upgrade.id; // Add data attribute
         
         let description = upgrade.description;
         if (isMaxed) {
@@ -260,24 +261,31 @@ function renderUpgrades() {
         `;
         
         if (!isMaxed) {
-            upgradeElement.addEventListener('click', () => {
+            upgradeElement.addEventListener('click', (e) => {
+                e.stopPropagation();
                 if (game.levs >= cost) {
-                    game.levs -= cost;
-                    upgrade.level++;
+                    upgradeElement.classList.add('processing');
                     
-                    if (upgrade.id === 'farm' || upgrade.id === 'fabrika') {
-                        game.levsPerClick = 1 + game.upgrades[0].effect(game.upgrades[0].level) + game.upgrades[3].effect(game.upgrades[3].level);
-                    } else {
-                        game.levsPerSecond = game.upgrades[1].effect(game.upgrades[1].level) + game.upgrades[2].effect(game.upgrades[2].level) + game.upgrades[4].effect(game.upgrades[4].level);
-                    }
-                    
-                    updateDisplay();
-                    renderUpgrades();
-                    checkAchievements();
-                    renderInventory();
-                    saveGame();
+                    setTimeout(() => {
+                        if (game.levs >= cost) {
+                            game.levs -= cost;
+                            upgrade.level++;
+                            
+                            if (upgrade.id === 'farm' || upgrade.id === 'fabrika') {
+                                game.levsPerClick = 1 + game.upgrades[0].effect(game.upgrades[0].level) + game.upgrades[3].effect(game.upgrades[3].level);
+                            } else {
+                                game.levsPerSecond = game.upgrades[1].effect(game.upgrades[1].level) + game.upgrades[2].effect(game.upgrades[2].level) + game.upgrades[4].effect(game.upgrades[4].level);
+                            }
+                            
+                            updateDisplay();
+                            checkAchievements();
+                            renderInventory();
+                            saveGame();
+                        }
+                        upgradeElement.classList.remove('processing');
+                    }, 50);
                 }
-            });
+            }, { once: false }); // Ensure listener persists
         }
         
         upgradesList.appendChild(upgradeElement);
@@ -491,8 +499,18 @@ function loadGame() {
 
 function gameLoop() {
     produceLevsAutomatically();
+    
+    // Only update display if numbers changed significantly
+    const currentLevs = Math.floor(game.levs);
+    if (Math.abs(currentLevs - lastDisplayedLevs) > 1) {
+        updateDisplay();
+        lastDisplayedLevs = currentLevs;
+    }
+    
     requestAnimationFrame(gameLoop);
 }
+
+let lastDisplayedLevs = 0;
 
 function init() {
     loadGame();
