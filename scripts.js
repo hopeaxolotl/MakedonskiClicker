@@ -230,7 +230,9 @@ function updateDisplay() {
     levCountElement.textContent = formatNumber(game.levs);
     levsPerClickElement.textContent = formatNumber(game.levsPerClick);
     levsPerSecondElement.textContent = formatNumber(game.levsPerSecond);
+    renderUpgrades();
 }
+
 
 function renderUpgrades() {
     upgradesList.innerHTML = '';
@@ -411,12 +413,14 @@ function produceLevsAutomatically() {
         const deltaTime = (now - game.lastSave) / 1000;
         const levsGained = game.levsPerSecond * deltaTime;
         
-        game.levs += levsGained;
-        game.totalLevsMined += levsGained;
-        game.lastSave = now;
-        
-        updateDisplay();
-        checkAchievements();
+        if (levsGained >= 1) { 
+            game.levs += levsGained;
+            game.totalLevsMined += levsGained;
+            game.lastSave = now;
+            
+            updateDisplay(); 
+            checkAchievements();
+        }
     }
 }
 
