@@ -1,0 +1,486 @@
+body {
+    font-family: 'Comic Sans MS', Tahoma, 'Comic Sans MS', Verdana, sans-serif;
+    background-image: url("Флаг северной македонии.png");
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.stats {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+        
+.stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.big-inventory-container {
+    background-image: url("ciganin.gif");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-size: 100% 100%;
+    border-radius: 10px;
+    padding: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.inventory-title {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: -20px;
+    padding: 15px 0;
+    color: #00ff0d;
+    border-radius: 10px 10px 0 0;
+}
+
+.inventory-content {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.inventory-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 10px;
+    background-color: rgba(00, 00, 00, 0.75);
+    border-radius: 5px;
+}
+
+.inventory-text {
+    min-width: 150px;
+}
+
+.inventory-name {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+.inventory-level {
+    font-size: 14px;
+    color: #cccccc;
+}
+
+.inventory-emojis {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.emoji-row {
+    line-height: 1;
+    white-space: nowrap;
+    font-size: 20px;
+}
+
+.empty-inventory {
+    padding: 20px;
+    text-align: center;
+    color: #cccccc;
+    font-style: italic;
+}
+
+.inventory-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.inventory-content::-webkit-scrollbar-track {
+    background: #ffffff;
+}
+
+.inventory-content::-webkit-scrollbar-thumb {
+    background-color: #ff0000;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 1000px;
+    padding: 20px;
+    margin: 0 auto; 
+}
+
+.game-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+h1 {
+    color: #3a2602;
+    margin-bottom: 10px;
+}
+
+.game-area {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.clicker-section {
+    flex: 1;
+    min-width: 300px;
+    background-image: url("zaimatakuvnarod.gif");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-size: 100% 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #16213e;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.stats {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.lev-count, .levs-per-second, .levs-per-click {
+    font-weight: bold;
+    font-size: 24px;
+    color: #ffe600;
+}
+
+.mine-btn {
+    background-image: url("фаг бг.png");
+    background-size: 150% 100%;
+    border: 0px;
+    border-radius: 50%;
+    width: 300px;
+    height: 300px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(77, 138, 247, 0.5);
+    transition: transform 0.1s, box-shadow 0.1s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 20px;
+    overflow: visible;
+}
+
+.mine-btn:hover {
+    box-shadow: 0 6px 20px rgba(0, 207, 28, 0.7);
+}
+
+.mine-btn:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 10px rgba(255, 255, 255, 0.6);
+}
+
+.mine-btn img {
+    width: 250px;
+    height: 120px;
+    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8));
+}
+
+.upgrades-section {
+    flex: 1;
+    min-width: 300px;
+    background-image: url("Презідент Болгария Бойко Борисов СЛАВА.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-size: 100% 100%;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.upgrades-title {
+    text-align: center;
+    margin-bottom: 15px;
+    color: #f7f44d;
+}
+
+.upgrade-item {
+    background-color: #020101;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.upgrade-item:hover {
+    background-color: #585858;
+}
+
+.upgrade-item.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.upgrade-info {
+    flex: 1;
+}
+
+.upgrade-name {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+
+.upgrade-description {
+    font-size: 14px;
+    color: #cccccc;
+}
+
+.upgrade-cost {
+    color: #2bff00;
+    font-weight: bold;
+    margin-left: 10px;
+    white-space: nowrap;
+}
+
+.upgrade-level {
+    background-color: #12812e;
+    color: white;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+
+#upgrades-list {
+    max-height: 500px;        
+    overflow-y: auto;         
+    padding-right: 8px;        
+}
+
+#upgrades-list::-webkit-scrollbar {
+    width: 8px;
+}
+
+#upgrades-list::-webkit-scrollbar-track {
+    background: #ffffff;
+}
+
+#upgrades-list::-webkit-scrollbar-thumb {
+    background-color: #ff0000;
+}
+
+.lev-float {
+    font-size: 50px;
+    position: absolute;
+    font-weight: bold;
+    color: #000000;
+    text-shadow: 0 0 5px rgba(73, 73, 73, 0.8);
+    opacity: 0;
+    pointer-events: none;
+    animation: float-up 2s ease-out;
+}
+
+@keyframes float-up {
+    0% {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100px) scale(0.5);
+        opacity: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    .game-area {
+        flex-direction: column;
+    }
+}
+
+.achievements-section {
+    margin-top: 20px;
+    background-image: url("bg.gif");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-size: 100% 100%;
+    border-radius: 10px;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.achievements-title {
+    text-align: center;
+    margin-top: -5px;
+    margin-bottom: 20px;
+    color: #ff0000;
+}
+
+.achievements-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+}
+
+.achievement {
+    background-color: #222222;
+    border-radius: 8px;
+    padding: 15px;
+    text-align: center;
+    opacity: 0.4;
+    transition: opacity 0.3s;
+}
+
+.achievement.unlocked {
+    opacity: 1;
+}
+
+.achievement-icon {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.achievement-name {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.achievement-description {
+    font-size: 12px;
+    color: #cccccc;
+}
+
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #7df74d;
+    color: rgb(0, 0, 0);
+    padding: 15px 20px;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    transform: translateX(150%);
+    transition: transform 0.3s ease-out;
+    z-index: 100;
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.footer {
+    background-color: #1a1a1a;
+    color: #f0f0f0;
+    padding: 2rem 1rem;
+    text-align: center;
+    width: 100%;
+    clear: both;
+}
+
+.footer a {
+    color: #ccc;
+    margin: 0 10px;
+    text-decoration: none;
+}
+
+.footer a:hover {
+    color: #005a7a;
+}
+
+#reset-button {
+    background-color: #ff0000;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 15px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 15px;
+}
+
+#reset-button:hover {
+    background-color: #cc0000;
+}
+
+#reset-button:active {
+    background-color: #990000;
+    transform: scale(0.98);
+}
+
+.audio-control-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.audio-control {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: 10px 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+  width: 80%;
+  max-width: 400px;
+}
+
+.mute-button {
+  cursor: pointer;
+  z-index: 1000;
+  width: 64px;
+  height: 64px;
+  margin-right: 15px;
+}
+
+.mute-status {
+  font-weight: bold;
+  color: #ffffff;
+  text-shadow: 1px 1px 2px #000000;
+  font-size: 16px;
+  flex: 1;
+  text-align: left;
+}
+
+#muteToggle {
+  background-color: #ffffff;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+}
+
+#muteToggle img {
+  width: 100%;
+  height: 100%;
+}

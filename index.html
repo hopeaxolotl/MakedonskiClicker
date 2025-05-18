@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="mk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Македонски Аргјумент Симуљатор</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="game-header">
+            <h1>Македонски Аргјумент Симуљатор</h1>
+            <p>КЛИКНЕТЕ за пари од нашиот БОЈКО БОРИСОВ!!</p>
+        </div>
+        
+        <div class="game-area">
+            <div class="clicker-section">
+                <div class="stats">
+                    <div class="stat">
+                        <div class="lev-count" id="lev-count">0</div>
+                        <div>лева</div>
+                    </div>
+                    <div class="stat">
+                        <div class="levs-per-click" id="levs-per-click">1</div>
+                        <div>лев за клик</div>
+                    </div>
+                    <div class="stat">
+                        <div class="levs-per-second" id="levs-per-second">0</div>
+                        <div>во секунди</div>
+                    </div>
+                </div>
+                
+                <button class="mine-btn" id="mine-btn">
+                    <img src="petlev.png" alt="buttonpng" border="0" />
+                </button>
+                <audio id="bgMusic" autoplay loop>
+                    <source src="POV стъпваш във Скопие.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+                <audio id="mineSound">
+                    <source src="srbija.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+                <div class="audio-control-container">
+                    <div class="audio-control">
+                        <div id="muteToggle" class="mute-button">
+                            <img src="mute.png" alt="Mute/Unmute" id="muteIcon">
+                        </div>
+                        <div id="muteStatus" class="mute-status">ЗАГЛУШЕН</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="upgrades-section">
+                <h2 class="upgrades-title">надградби</h2>
+                <div id="upgrades-list"></div>
+            </div>
+        </div>
+        
+        <div class="inventory-section">
+            <div class="inventory-grid" id="inventory-grid"></div>
+        </div>
+
+        <div class="achievements-section">
+            <h2 class="achievements-title">достигнувања</h2>
+            <div class="achievements-grid" id="achievements-grid"></div>
+        </div>
+
+        
+    </div>
+
+
+<footer class="footer">
+  <div style="max-width: 800px; margin: auto;">
+    <p>НЯМА &copy; 2025 фоксдейл, остръв мен</p>
+    <p>coded by <a href="https://www.youtube.com/watch?v=aEQ57nuXe78">ANti macedonian coalition | антимакедонска коалиция</a></p>
+    <div style="margin-top: 1rem;">
+      <a href="https://www.youtube.com/watch?v=rBrzp5vo_FQ">слави тригонометри</a> |
+      <a href="https://www.youtube.com/watch?v=q-Rqdgna3Yw">spearmintimperial</a> |
+      <a href="https://www.youtube.com/watch?v=EtnLkshnjtY">pain and suffering</a>
+    </div>
+    <p>i fking hate my life (НАСТЯ Е БОСАНСКА!!!)</p>
+    <button id="reset-button" style="margin-top: 1rem; padding: 5px 10px; background-color: #ff0000; color: white; border: none; border-radius: 5px; cursor: pointer;">РЕСЕТИРАЈ ПРОГРЕС</button>
+  </div>
+</footer>
+
+
+<div class="notification" id="notification"></div>
+
+<script src="scripts.js"></script>
+
+</body>
+</html>
